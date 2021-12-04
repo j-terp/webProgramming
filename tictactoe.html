@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="tictactoe.js"></script>
+  <link rel="stylesheet" href="./assets/main.css">
+  <style>
+    .TicTacToe div {
+      width: fit-content;
+      margin: auto;
+    }
+    .TicTacToe div .GameText, .TicTacToe div .Game {
+      padding: 10px 20px;
+      float: left;
+    }
+    table td {
+      width: 50px;
+      height: 50px;
+    }
+    table div {
+      margin: auto;
+      width: fit-content;
+    }
+    table button {
+      display: block;
+    }
+    table p {
+      display: none;
+      margin: 0;
+    }
+    table, th, td {
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+  <section class="intro">
+    <h1>TicTacToe</h1>
+  </section>
+  <section class="TicTacToe">
+    <div>
+      <div class="GameText">
+        <p id="player">It is <span>O</span> turn.</p>
+        <p id = "result">Winner is: </p>
+        <button onclick="reset()">Reset Game</button>
+      </div>
+      <div class="Game">
+        <table align="center">
+          <tr>
+            <td id="1">
+              <div>
+                <button onclick="setPiece(1)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="2">
+              <div>
+                <button onclick="setPiece(2)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="3">
+              <div>
+                <button onclick="setPiece(3)">?</button>
+                <p></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td id="4">
+              <div>
+                <button onclick="setPiece(4)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="5">
+              <div>
+                <button onclick="setPiece(5)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="6">
+              <div>
+                <button onclick="setPiece(6)">?</button>
+                <p></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td id="7">
+              <div>
+                <button onclick="setPiece(7)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="8">
+              <div>
+                <button onclick="setPiece(8)">?</button>
+                <p></p>
+              </div>
+            </td>
+            <td id="9">
+              <div>
+                <button onclick="setPiece(9)">?</button>
+                <p></p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    
+  </div>
+</body>
+</html>

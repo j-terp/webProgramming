@@ -21,7 +21,7 @@ function createBoard() {
         var index = i * size + j;
         var bomb = boardArray[index];
         checkArray[index] = false;
-        button.textContent = (bomb ? "U" : "O");
+        button.textContent = (bomb ? "" : "");
 
         // add button's 'onclick' event.
         button.setAttribute('onclick', 'checkForMine(this, ' + size.toString() + ')');
@@ -118,6 +118,13 @@ function checkNear(element, size) {
         }
       }
     }
-    element.textContent = (numBomb == 0 ? "P" : numBomb.toString());
+    if (numBomb == 0) {
+      element.textContent = "";
+      element.style.background = "lightgreen";
+    } else {
+      element.textContent = numBomb.toString();
+      element.style.background = "red";
+    }
+    
   }
 }

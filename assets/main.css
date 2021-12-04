@@ -1,0 +1,18 @@
+
+body {
+  background: white;
+  margin: 0;
+}
+h1 {
+  font-size: 50px;
+}
+
+/* Class */
+
+section {
+  width: 100;
+}
+section.intro * {
+  width: fit-content;
+  margin: auto;
+}

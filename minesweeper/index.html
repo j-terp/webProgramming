@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="minesweeper.js"></script>
+  </head>
+  <body>
+    <section class="intro">
+      <h1>Mine Sweeper</h1>
+    </section>
+    <section class="Mine Sweeper">
+      <div>
+        <div class="StartText">
+          <p>Input size of board:</p>
+          <input type="text" id="boardSizeInput">
+          <input type="text" id="numMinesInput">
+          <button onclick="createBoard()">Create Board</button>
+        </div>
+        <div class="GameText">
+          <p id="mines">There is <span>O</span> left.</p>
+          <p id = "result">There are still mines left</p>
+          
+          <button onclick="restart()">Restart Game</button>
+        </div>
+        <div class="Game">
+          <table id="mineTable">
+
+          </table>
+        </div>
+      </div>
+      
+      
+    </div>
+  </body>
+  </html>

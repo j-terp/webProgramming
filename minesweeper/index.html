@@ -32,13 +32,14 @@
           <button onclick="createBoard()">Create Board</button>
         </div>
         <div class="GameText">
-          <p id="remaining">There is <span>O</span> left.</p>
+          <p id="remaining">There is <span>0</span> left.</p>
           <p id = "result">There are still mines left</p>
+          <button onclick="changeMode()">Change mode</button>
+          <p id = "ModeP">Walk mode</p>
           
           <button onclick="restart()">Restart Game</button>
         </div>
         <div class="Game">
-          <button onclick="changeMode()">Set flag</button>
           <table id="mineTable">
 
           </table>

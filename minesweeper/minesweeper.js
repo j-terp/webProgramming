@@ -2,6 +2,7 @@
 var boardArray = [];
 var checkArray = [];
 var remaining = 0;
+var placingFlag = false;
 
 function createBoard() {
   var size = parseInt(document.getElementById("boardSizeInput").value);
@@ -76,13 +77,24 @@ function checkForMine(element, sizeStr) {
   var id = element.id;
   var size = parseInt(sizeStr);
   var result = boardArray[id];
-  if (result) {
-    document.getElementById("remaining").getElementsByTagName("span")[0].textContent = "You lost";
-    element.style.background = "black";
+  if (placingFlag) {
+    if (element.textContent != "P") {
+      element.textContent = "P";
+    } else {
+      element.textContent = "";
+    }
   } else {
-    var numBombNear = 0;//checkNearBombs(element);
-    checkNear(element, size);
+    if (element.textContent != "P") {
+      if (result) {
+        document.getElementById("remaining").getElementsByTagName("span")[0].textContent = "You lost";
+        element.style.background = "black";
+      } else {
+        var numBombNear = 0;//checkNearBombs(element);
+        checkNear(element, size);
+      }
+    }
   }
+  
 }
 
 function checkNear(element, size) {
@@ -131,5 +143,16 @@ function checkNear(element, size) {
     
     document.getElementById("remaining").style.display = "none";
     document.getElementById("result").textContent = "You won";
+  }
+}
+
+
+function changeMode () {
+  if (placingFlag) {
+    placingFlag = false;
+    document.getElementById("ModeP").textContent = "Walk mode";
+  } else {
+    placingFlag = true;
+    document.getElementById("ModeP").textContent = "Flag mode";
   }
 }

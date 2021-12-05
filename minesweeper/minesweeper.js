@@ -11,6 +11,9 @@ function createBoard() {
   checkArray.length = size*size;
   remaining = checkArray.length - numMines;
   document.getElementById("remaining").getElementsByTagName("span")[0].textContent = remaining;
+  document.getElementsByClassName("StartText")[0].style.display = "none";
+  document.getElementsByClassName("GameText")[0].style.display = "block";
+  document.getElementsByClassName("Game")[0].style.display = "block";
   var table = document.getElementById("mineTable");
   for (var i = 0; i < size; i++) {
     var tr = table.insertRow(i);
@@ -69,8 +72,18 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function restart() {
-  alert("You clicked me");
+function quit() {
+  document.getElementsByClassName("StartText")[0].style.display = "block";
+  document.getElementsByClassName("GameText")[0].style.display = "none";
+  document.getElementsByClassName("Game")[0].style.display = "none";
+  var table = document.getElementsByTagName("tbody")[0];
+  table.remove();
+}
+
+function restart(params) {
+  var table = document.getElementsByTagName("tbody")[0];
+  table.remove();
+  createBoard();
 }
 
 function checkForMine(element, sizeStr) {
@@ -150,9 +163,9 @@ function checkNear(element, size) {
 function changeMode () {
   if (placingFlag) {
     placingFlag = false;
-    document.getElementById("ModeP").textContent = "Walk mode";
+    document.getElementById("ModeP").innerHTML = "Walk mode <button onclick=\"changeMode()\">Change</button>";
   } else {
     placingFlag = true;
-    document.getElementById("ModeP").textContent = "Flag mode";
+    document.getElementById("ModeP").innerHTML = "Flag mode <button onclick=\"changeMode()\">Change</button>";
   }
 }

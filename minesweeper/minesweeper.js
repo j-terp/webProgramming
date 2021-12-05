@@ -9,6 +9,7 @@ var flagged = 0;
 
 function createBoard() {
   playing = true;
+  flagged = 0;
   
   // Creating board pattern
   var size = parseInt(document.getElementById("boardSizeInput").value);

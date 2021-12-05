@@ -75,8 +75,9 @@ function checkForMine(element, sizeStr) {
   var size = parseInt(sizeStr);
   var result = boardArray[id];
   if (result) {
-    element.textContent = "X";
-    alert("You lose!");
+    //element.textContent = "X";
+    element.style.background = "black";
+    //alert("You lose!");
   } else {
     var numBombNear = 0;//checkNearBombs(element);
     checkNear(element, size);

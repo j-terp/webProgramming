@@ -13,9 +13,7 @@ function createBoard() {
   checkArray.length = size*size;
   remaining = checkArray.length - numMines;
   document.getElementById("remaining").getElementsByTagName("span")[0].textContent = remaining;
-  document.getElementsByClassName("StartText")[0].style.display = "none";
-  document.getElementsByClassName("GameText")[0].style.display = "block";
-  document.getElementsByClassName("Game")[0].style.display = "block";
+  document.getElementById("result").textContent = "There are still mines left";
   var table = document.getElementById("mineTable");
   for (var i = 0; i < size; i++) {
     var tr = table.insertRow(i);
@@ -39,6 +37,9 @@ function createBoard() {
         td.appendChild(button);
     }
   }
+  document.getElementsByClassName("StartText")[0].style.display = "none";
+  document.getElementsByClassName("GameText")[0].style.display = "block";
+  document.getElementsByClassName("Game")[0].style.display = "block";
 }
 
 function fillMines(size, numMines) {
@@ -95,9 +96,7 @@ function checkForMine(element, sizeStr) {
   var result = boardArray[id];
   if (placingFlag) {
     if (element.textContent != "P") {
-      if (checkArray[id]) {
-
-      } else {
+      if (!checkArray[id]) {
         element.textContent = "P";
         element.style.background = "yellow";
       }
@@ -173,6 +172,11 @@ function checkNear(element, size) {
 
 
 function changeMode () {
+  var buttons =  document.getElementById("mineTable").getElementsByTagName("button");
+  var len = buttons.length;
+  for(var i = 0; i < len; i++) {
+    buttons[i].classList.toggle("flagMode")
+  }
   if (placingFlag) {
     placingFlag = false;
     document.getElementById("ModeP").innerHTML = "Walk mode <button onclick=\"changeMode()\">Change</button>";

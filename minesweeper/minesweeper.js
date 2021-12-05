@@ -92,7 +92,12 @@ function checkForMine(element, sizeStr) {
   var result = boardArray[id];
   if (placingFlag) {
     if (element.textContent != "P") {
-      element.textContent = "P";
+      if (checkArray[id]) {
+
+      } else {
+        element.textContent = "P";
+      }
+      
     } else {
       element.textContent = "";
     }
@@ -101,6 +106,7 @@ function checkForMine(element, sizeStr) {
       if (result) {
         document.getElementById("remaining").getElementsByTagName("span")[0].textContent = "You lost";
         element.style.background = "black";
+        gameEnd();
       } else {
         var numBombNear = 0;//checkNearBombs(element);
         checkNear(element, size);
@@ -156,6 +162,7 @@ function checkNear(element, size) {
     
     document.getElementById("remaining").style.display = "none";
     document.getElementById("result").textContent = "You won";
+    gameEnd();
   }
 }
 
@@ -167,5 +174,16 @@ function changeMode () {
   } else {
     placingFlag = true;
     document.getElementById("ModeP").innerHTML = "Flag mode <button onclick=\"changeMode()\">Change</button>";
+  }
+}
+
+function gameEnd () {
+  var size = boardArray.length;
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      var index = i * size + j;
+      var button = document.getElementById(index.toString());
+      button.onclick = "";
+    }
   }
 }

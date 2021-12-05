@@ -130,13 +130,21 @@ function checkForMine(element, sizeStr) {
         if (flagged < numMines && !checkArray[id]) {
           element.textContent = "P";
           element.style.background = "yellow";
+          element.classList.add("flagged");
           document.getElementById("result").getElementsByTagName("span")[0].textContent = ++flagged;
+          if (flagged == numMines) {
+            document.getElementById("remaining").innerHTML += " <button onclick=\"checkFlagged()\">Check rest</button>";
+          }
         }
         
       }
       else {
         element.textContent = "";
         element.style.background = "rgb(239, 239, 239)";
+        element.classList.remove("flagged");
+        if (flagged == numMines) {
+          document.getElementById("remaining").innerHTML = "<span>" + remaining.toString() + "</span> boxes left to clear.";
+        }
         document.getElementById("result").getElementsByTagName("span")[0].textContent = --flagged;
       }
   }
@@ -144,8 +152,9 @@ function checkForMine(element, sizeStr) {
   else {
     if (element.textContent != "P") {
       if (result) {
-        document.getElementById("result").textContent = "You lost";
+        score(false);
         element.style.background = "black";
+        score(false);
         gameEnd();
       } else {
         var numBombNear = 0;//checkNearBombs(element);
@@ -206,12 +215,10 @@ function checkNear(element, size) {
   
   // Win check
   if (remaining == 0) {
-    document.getElementById("remaining").style.display = "none";
-    document.getElementById("result").textContent = "You won";
+    score(true);
     gameEnd();
   }
 }
-
 
 function changeMode () {
   var buttons =  document.getElementById("mineTable").getElementsByTagName("button");
@@ -247,6 +254,29 @@ function gameEnd () {
 function suggestMines (element) {
   var numMineInput = document.getElementById("numMinesInput");
   numMineInput.value = Math.floor(element.value * element.value / 6);
+}
+
+function checkFlagged() {
+  var flagged = document.getElementById("mineTable").getElementsByClassName("flagged");
+  var len = flagged.length;
+  for(var i = 0; i < len; i++) {
+    if(boardArray[parseInt(flagged[i].id)] == false) {
+      break;
+    }
+  }
+  if (i == len) {
+    score(true);
+  }
+}
+
+function score(state) {
+  if (state == true) {
+    document.getElementById("remaining").style.display = "none";
+    document.getElementById("result").textContent = "You won";
+  }
+  else {
+    document.getElementById("result").textContent = "You lost";
+  }
 }
 
 /* Event keys */

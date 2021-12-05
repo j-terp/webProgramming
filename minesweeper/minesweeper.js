@@ -83,10 +83,12 @@ function checkForMine(element, sizeStr) {
 
       } else {
         element.textContent = "P";
+        element.style.background = "yellow";
       }
       
     } else {
       element.textContent = "";
+      element.style.background = "rgb(239, 239, 239)";
     }
   } else {
     if (element.textContent != "P") {
@@ -173,4 +175,10 @@ function gameEnd () {
       button.onclick = "";
     }
   }
+}
+
+
+function suggestMines (element) {
+  var numMineInput = document.getElementById("numMinesInput");
+  numMineInput.value = element.value * element.value / 6;
 }

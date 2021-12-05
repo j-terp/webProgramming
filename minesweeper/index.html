@@ -27,7 +27,7 @@
       <div>
         <div class="StartText">
           <p>Input size of board:</p>
-          <input type="text" id="boardSizeInput" value="10">
+          <input type="text" id="boardSizeInput" value="10" max="60" onchange="suggestMines(this)">
           <input type="text" id="numMinesInput" value="10">
           <button onclick="createBoard()">Create Board</button>
         </div>

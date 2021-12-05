@@ -2,6 +2,13 @@
 <html>
   <head>
     <script src="minesweeper.js"></script>
+    <style>
+      .Game button {
+        width: 50px;
+        height: 50px;
+        border-radius: 10%;
+      }
+    </style>
   </head>
   <body>
     <section class="intro">
@@ -11,8 +18,8 @@
       <div>
         <div class="StartText">
           <p>Input size of board:</p>
-          <input type="text" id="boardSizeInput">
-          <input type="text" id="numMinesInput">
+          <input type="text" id="boardSizeInput" value="10">
+          <input type="text" id="numMinesInput" value="10">
           <button onclick="createBoard()">Create Board</button>
         </div>
         <div class="GameText">

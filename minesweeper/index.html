@@ -2,11 +2,20 @@
 <html>
   <head>
     <script src="minesweeper.js"></script>
+    <link rel="stylesheet" href="../assets/main.css">
     <style>
       .Game button {
         width: 50px;
         height: 50px;
         border-radius: 10%;
+      }
+      .MineSweeper div {
+        width: fit-content;
+        margin: auto;
+      }
+      .MineSweeper div .StartText, .MineSweeper div .GameText, .MineSweeper div .Game {
+        padding: 10px 20px;
+        float: left;
       }
     </style>
   </head>
@@ -14,7 +23,7 @@
     <section class="intro">
       <h1>Mine Sweeper</h1>
     </section>
-    <section class="Mine Sweeper">
+    <section class="MineSweeper">
       <div>
         <div class="StartText">
           <p>Input size of board:</p>

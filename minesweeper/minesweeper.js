@@ -7,36 +7,42 @@ var playing = false;
 
 function createBoard() {
   playing = true;
+  
+  // Creating board pattern
   var size = parseInt(document.getElementById("boardSizeInput").value);
   var numMines = parseInt(document.getElementById("numMinesInput").value);
   boardArray = fillMines(size, numMines);
   checkArray.length = size*size;
+  
+  // Counting remaing boxes
   remaining = checkArray.length - numMines;
   document.getElementById("remaining").getElementsByTagName("span")[0].textContent = remaining;
+  document.getElementById("remaining").style.display = "block";
   document.getElementById("result").textContent = "There are still mines left";
+  
+  // Creating board
   var table = document.getElementById("mineTable");
   for (var i = 0; i < size; i++) {
     var tr = table.insertRow(i);
-
     for (var j = 0; j < size; j++) {
       var td = document.createElement('td');
       td = tr.insertCell(j);
-
       var button = document.createElement('button');5
+      
+      // set input attributes
+      var index = i * size + j;
+      var bomb = boardArray[index];
+      checkArray[index] = false;
+      button.textContent = (bomb ? "" : "");
 
-        // set input attributes
-        var index = i * size + j;
-        var bomb = boardArray[index];
-        checkArray[index] = false;
-        button.textContent = (bomb ? "" : "");
+      // add button's 'onclick' event.
+      button.setAttribute('onclick', 'checkForMine(this, ' + size.toString() + ')');
+      button.setAttribute('id', index.toString());
 
-        // add button's 'onclick' event.
-        button.setAttribute('onclick', 'checkForMine(this, ' + size.toString() + ')');
-        button.setAttribute('id', index.toString());
-
-        td.appendChild(button);
+      td.appendChild(button);
     }
   }
+  // Displaying Game
   document.getElementsByClassName("StartText")[0].style.display = "none";
   document.getElementsByClassName("GameText")[0].style.display = "block";
   document.getElementsByClassName("Game")[0].style.display = "block";
@@ -45,48 +51,53 @@ function createBoard() {
 function fillMines(size, numMines) {
   var mineArray = [];
   mineArray.length = size*size;
+  
+  // Adds mines
   for (var i = 0; i < numMines; i++) {
     mineArray[i] = true;
   }
+  
+  // Adds empty boxes
   for (var i = numMines; i < size*size; i++) {
     mineArray[i] = false;
   }
+  
+  // Shuffles board
   mineArray = shuffle(mineArray);
   return mineArray;
 }
 
 function shuffle(array) {
-  let currentIndex = array.length,  randomIndex;
-
+  let currentIndex = array.length, randomIndex;
   while (currentIndex != 0) {
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-
-    // And swap it with the current element.
+    
+    // Swaps two elements
     [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+     array[randomIndex], array[currentIndex]];
   }
-
   return array;
-}
-
-function random(min, max) { 
-  return Math.random() * (max - min) + min;
 }
 
 function quit() {
   playing = false;
+  
+  // Display Start Menu
   document.getElementsByClassName("StartText")[0].style.display = "block";
   document.getElementsByClassName("GameText")[0].style.display = "none";
   document.getElementsByClassName("Game")[0].style.display = "none";
+  
+  // Removes board
   var table = document.getElementsByTagName("tbody")[0];
   table.remove();
 }
 
 function restart(params) {
+  // Removes board
   var table = document.getElementsByTagName("tbody")[0];
   table.remove();
+  
   createBoard();
 }
 
@@ -94,6 +105,8 @@ function checkForMine(element, sizeStr) {
   var id = element.id;
   var size = parseInt(sizeStr);
   var result = boardArray[id];
+  
+  // Flagmode
   if (placingFlag) {
     if (element.textContent != "P") {
       if (!checkArray[id]) {
@@ -101,11 +114,14 @@ function checkForMine(element, sizeStr) {
         element.style.background = "yellow";
       }
       
-    } else {
+    }
+    else {
       element.textContent = "";
       element.style.background = "rgb(239, 239, 239)";
     }
-  } else {
+  }
+  // Mine Check
+  else {
     if (element.textContent != "P") {
       if (result) {
         document.getElementById("result").textContent = "You lost";
@@ -124,6 +140,8 @@ function checkNear(element, size) {
   var coordX = parseInt(element.id) % size;
   var coordY = Math.floor(parseInt(element.id) / size);
   var index = coordY * size + coordX;
+  
+  //  Counts nearby bombs
   if (!checkArray[index]) {
     checkArray[index] = true;
     document.getElementById("remaining").getElementsByTagName("span")[0].textContent = --remaining;
@@ -141,6 +159,7 @@ function checkNear(element, size) {
         }
       }
     }
+    // Check for nearby squares
     if (numBomb == 0) {
       for (var x = coordX - 1; x <= coordX + 1; x++) {
         for (var y = coordY - 1; y <= coordY + 1; y++) {
@@ -154,6 +173,8 @@ function checkNear(element, size) {
         }
       }
     }
+    
+    // Colour assignment
     if (numBomb == 0) {
       element.textContent = "";
       element.style.background = "lightgreen";
@@ -162,8 +183,9 @@ function checkNear(element, size) {
       element.style.background = "red";
     } 
   }
+  
+  // Win check
   if (remaining == 0) {
-    
     document.getElementById("remaining").style.display = "none";
     document.getElementById("result").textContent = "You won";
     gameEnd();
@@ -174,9 +196,13 @@ function checkNear(element, size) {
 function changeMode () {
   var buttons =  document.getElementById("mineTable").getElementsByTagName("button");
   var len = buttons.length;
+  
+  // Changes cursor for board
   for(var i = 0; i < len; i++) {
     buttons[i].classList.toggle("flagMode")
   }
+  
+  // Changes mode
   if (placingFlag) {
     placingFlag = false;
     document.getElementById("ModeP").innerHTML = "Walk mode <button onclick=\"changeMode()\">Change</button>";
@@ -188,6 +214,7 @@ function changeMode () {
 
 function gameEnd () {
   var size = boardArray.length;
+  // Disables board functions
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
       var index = i * size + j;
@@ -199,7 +226,7 @@ function gameEnd () {
 
 function suggestMines (element) {
   var numMineInput = document.getElementById("numMinesInput");
-  numMineInput.value = element.value * element.value / 6;
+  numMineInput.value = Math.floor(element.value * element.value / 6);
 }
 
 /* Event keys */
@@ -222,5 +249,4 @@ document.addEventListener('keydown', (event) => {
       createBoard();
     }
   }
-  
 }, false);

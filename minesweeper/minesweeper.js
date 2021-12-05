@@ -4,13 +4,15 @@ var checkArray = [];
 var remaining = 0;
 var placingFlag = false;
 var playing = false;
+var numMines;
+var flagged = 0;
 
 function createBoard() {
   playing = true;
   
   // Creating board pattern
   var size = parseInt(document.getElementById("boardSizeInput").value);
-  var numMines = parseInt(document.getElementById("numMinesInput").value);
+  numMines = parseInt(document.getElementById("numMinesInput").value);
   boardArray = fillMines(size, numMines);
   checkArray.length = size*size;
   
@@ -18,7 +20,7 @@ function createBoard() {
   remaining = checkArray.length - numMines;
   document.getElementById("remaining").getElementsByTagName("span")[0].textContent = remaining;
   document.getElementById("remaining").style.display = "block";
-  document.getElementById("result").textContent = "There are still mines left";
+  document.getElementById("result").innerHTML = "<span>0</span> of <span>" + numMines.toString() + "</span> mines are flagged";
   
   // Creating board
   var table = document.getElementById("mineTable");
@@ -81,24 +83,40 @@ function shuffle(array) {
 }
 
 function quit() {
-  playing = false;
-  
-  // Display Start Menu
-  document.getElementsByClassName("StartText")[0].style.display = "block";
-  document.getElementsByClassName("GameText")[0].style.display = "none";
-  document.getElementsByClassName("Game")[0].style.display = "none";
-  
-  // Removes board
-  var table = document.getElementsByTagName("tbody")[0];
-  table.remove();
+  if (
+    document.getElementById("result").textContent == "You lost" || window.confirm("Do you really want to quit?")) {
+    playing = false;
+    if (placingFlag) {
+      placingFlag = false;
+      document.getElementById("ModeP").innerHTML = "Walk mode <button onclick=\"changeMode()\">Change</button>";
+    }
+    
+    // Display Start Menu
+    document.getElementsByClassName("StartText")[0].style.display = "block";
+    document.getElementsByClassName("GameText")[0].style.display = "none";
+    document.getElementsByClassName("Game")[0].style.display = "none";
+    
+    // Removes board
+    var table = document.getElementsByTagName("tbody")[0];
+    table.remove();
+  }
 }
 
 function restart(params) {
+  if (document.getElementById("result").textContent == "You lost" || window.confirm("Do you really want to restart?")) {
+    if (placingFlag) {
+    placingFlag = false;
+    document.getElementById("ModeP").innerHTML = "Walk mode <button onclick=\"changeMode()\">Change</button>";
+  }
+
   // Removes board
   var table = document.getElementsByTagName("tbody")[0];
   table.remove();
   
   createBoard();
+  }
+  
+  
 }
 
 function checkForMine(element, sizeStr) {
@@ -108,17 +126,19 @@ function checkForMine(element, sizeStr) {
   
   // Flagmode
   if (placingFlag) {
-    if (element.textContent != "P") {
-      if (!checkArray[id]) {
-        element.textContent = "P";
-        element.style.background = "yellow";
+      if (element.textContent != "P") {
+        if (flagged < numMines && !checkArray[id]) {
+          element.textContent = "P";
+          element.style.background = "yellow";
+          document.getElementById("result").getElementsByTagName("span")[0].textContent = ++flagged;
+        }
+        
       }
-      
-    }
-    else {
-      element.textContent = "";
-      element.style.background = "rgb(239, 239, 239)";
-    }
+      else {
+        element.textContent = "";
+        element.style.background = "rgb(239, 239, 239)";
+        document.getElementById("result").getElementsByTagName("span")[0].textContent = --flagged;
+      }
   }
   // Mine Check
   else {

@@ -4,6 +4,10 @@
     <script src="minesweeper.js"></script>
     <link rel="stylesheet" href="../assets/main.css">
     <style>
+      div.inputField {
+        padding-right: 10px;
+        float: left;
+      }
       .Game button {
         width: 50px;
         height: 50px;
@@ -48,20 +52,20 @@
     <section class="MineSweeper">
       <div>
         <div class="StartText">
-          <div>
+          <div class="inputField">
             <p>Input size of board:</p>
             <input type="text" id="boardSizeInput" value="10" max="60" onchange="suggestMines(this)">
           </div>
-          <div>
+          <div class="inputField">
             <p>Input number of mines:</p>
-            <input type="text" id="numMinesInput" value="10">
+            <input type="text" id="numMinesInput" value="16">
           </div>
           <button onclick="createBoard()">Create Board</button>
         </div>
         <div class="GameText">
-          <p id="remaining">There is <span>0</span> left.</p>
-          <p id = "result">There are still mines left</p>
-          <p id = "ModeP">Walk mode <button onclick="changeMode()">Change</button></p>
+          <p id="remaining">There is <span>0</span> boxes left to clear.</p>
+          <p id="result"><span>0</span> of <span>0</span> mines are flagged</p>
+          <p id="ModeP">Walk mode <button onclick="changeMode()">Change</button></p>
           <button onclick="restart()">Restart</button>
           <button onclick="quit()">Quit Game</button>
         </div>

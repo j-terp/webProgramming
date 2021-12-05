@@ -3,8 +3,10 @@ var boardArray = [];
 var checkArray = [];
 var remaining = 0;
 var placingFlag = false;
+var playing = false;
 
 function createBoard() {
+  playing = true;
   var size = parseInt(document.getElementById("boardSizeInput").value);
   var numMines = parseInt(document.getElementById("numMinesInput").value);
   boardArray = fillMines(size, numMines);
@@ -73,6 +75,7 @@ function random(min, max) {
 }
 
 function quit() {
+  playing = false;
   document.getElementsByClassName("StartText")[0].style.display = "block";
   document.getElementsByClassName("GameText")[0].style.display = "none";
   document.getElementsByClassName("Game")[0].style.display = "none";
@@ -104,7 +107,7 @@ function checkForMine(element, sizeStr) {
   } else {
     if (element.textContent != "P") {
       if (result) {
-        document.getElementById("remaining").getElementsByTagName("span")[0].textContent = "You lost";
+        document.getElementById("result").textContent = "You lost";
         element.style.background = "black";
         gameEnd();
       } else {
@@ -187,3 +190,26 @@ function gameEnd () {
     }
   }
 }
+
+/* Event keys */
+document.addEventListener('keydown', (event) => {
+  var code = event.code;
+  if (playing) {
+    if (code === 'KeyF') {
+      changeMode();
+      return;
+    }
+    if (code === 'KeyQ') {
+      quit();
+    }
+    if (code === 'KeyR') {
+      restart();
+    }
+  }
+  else {
+    if (code === 'KeyS') {
+      createBoard();
+    }
+  }
+  
+}, false);

@@ -1,12 +1,15 @@
 
 var boardArray = [];
 var checkArray = [];
+var remaining = 0;
 
 function createBoard() {
   var size = parseInt(document.getElementById("boardSizeInput").value);
   var numMines = parseInt(document.getElementById("numMinesInput").value);
   boardArray = fillMines(size, numMines);
   checkArray.length = size*size;
+  remaining = checkArray.length - numMines;
+  document.getElementById("remaining").getElementsByTagName("span")[0].textContent = remaining;
   var table = document.getElementById("mineTable");
   for (var i = 0; i < size; i++) {
     var tr = table.insertRow(i);
@@ -49,7 +52,6 @@ function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
   while (currentIndex != 0) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
@@ -76,21 +78,21 @@ function checkForMine(element, sizeStr) {
   var result = boardArray[id];
   if (result) {
     element.textContent = "X";
+    document.getElementById("remaining").getElementsByTagName("span")[0].textContent = "You lost";
     alert("You lose!");
   } else {
     var numBombNear = 0;//checkNearBombs(element);
     checkNear(element, size);
   }
-
 }
 
 function checkNear(element, size) {
-  
   var coordX = parseInt(element.id) % size;
   var coordY = Math.floor(parseInt(element.id) / size);
   var index = coordY * size + coordX;
   if (!checkArray[index]) {
     checkArray[index] = true;
+    document.getElementById("remaining").getElementsByTagName("span")[0].textContent = --remaining;
     var numBomb = 0;
     for (var x = coordX - 1; x <= coordX + 1; x++) {
       for (var y = coordY - 1; y <= coordY + 1; y++) {
@@ -124,7 +126,11 @@ function checkNear(element, size) {
     } else {
       element.textContent = numBomb.toString();
       element.style.background = "red";
-    }
+    } 
+  }
+  if (remaining == 0) {
     
+    document.getElementById("remaining").style.display = "none";
+    document.getElementById("result").textContent = "You won";
   }
 }

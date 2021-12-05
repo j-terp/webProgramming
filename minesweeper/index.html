@@ -17,6 +17,18 @@
         padding: 10px 20px;
         float: left;
       }
+      .MineSweeper div .GameText, .MineSweeper div .Game {
+        display: none;
+      }
+      #Mode {
+        width: 100%;
+        height: 30px;
+        display: block;
+        float: none;
+      }
+      div#Mode * {
+        float: left;
+      }
     </style>
   </head>
   <body>
@@ -34,10 +46,9 @@
         <div class="GameText">
           <p id="remaining">There is <span>0</span> left.</p>
           <p id = "result">There are still mines left</p>
-          <button onclick="changeMode()">Change mode</button>
-          <p id = "ModeP">Walk mode</p>
-          
-          <button onclick="restart()">Restart Game</button>
+          <p id = "ModeP">Walk mode <button onclick="changeMode()">Change</button></p>
+          <button onclick="restart()">Restart</button>
+          <button onclick="quit()">Quit Game</button>
         </div>
         <div class="Game">
           <table id="mineTable">

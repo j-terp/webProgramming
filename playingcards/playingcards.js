@@ -11,3 +11,12 @@ function createDeck() {
   }
   
 }
+
+function drawCard() {
+  var HUD = document.getElementsByClassName("HUD")[0];
+  var card = document.createElement("div");
+  card.className = "square"
+  HUD.appendChild(card);
+}
+
+
